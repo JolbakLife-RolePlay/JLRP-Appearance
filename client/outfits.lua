@@ -18,8 +18,8 @@ local function getOutfit(slot)
 	return outfits[slot]
 end
 
-if ESX then
-	RegisterNetEvent('esx:playerLoaded', function()
+if Framework then
+	RegisterNetEvent('JLRP-Framework:playerLoaded', function()
 		outfitNames = nil
 		table.wipe(outfits)
 	end)
@@ -182,7 +182,7 @@ RegisterNetEvent('ox_appearance:use', function(data)
     }) then 
 		exports['fivem-appearance']:setPlayerAppearance(appearance)
 
-    	if ESX then
+    	if Framework then
 			TriggerServerEvent('esx_skin:save', appearance)
 		else
 			TriggerServerEvent('ox_appearance:save', appearance)

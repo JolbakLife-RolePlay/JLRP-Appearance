@@ -1,64 +1,64 @@
 Players = {}
 
-function SaveAppearance(identifier, appearance)
-	SetResourceKvp(('%s:appearance'):format(identifier), json.encode(appearance))
+function SaveAppearance(citizenid, appearance)
+	SetResourceKvp(('%s:appearance'):format(citizenid), json.encode(appearance))
 end
 
 exports('save', SaveAppearance)
 
-function LoadAppearance(source, identifier)
-	Players[source] = identifier
-	local data = GetResourceKvpString(('%s:appearance'):format(identifier))
+function LoadAppearance(source, citizenid)
+	Players[source] = citizenid
+	local data = GetResourceKvpString(('%s:appearance'):format(citizenid))
 	return data and json.decode(data) or {}
 end
 
 exports('load', LoadAppearance)
 
-function SaveOutfit(identifier, appearance, slot, outfitNames)
-	SetResourceKvp(('%s:outfit_%s'):format(identifier, slot), json.encode(appearance))
-	SetResourceKvp(('%s:outfits'):format(identifier), json.encode(outfitNames))
+function SaveOutfit(citizenid, appearance, slot, outfitNames)
+	SetResourceKvp(('%s:outfit_%s'):format(citizenid, slot), json.encode(appearance))
+	SetResourceKvp(('%s:outfits'):format(citizenid), json.encode(outfitNames))
 end
 
 exports('saveOutfit', SaveOutfit)
 
-function LoadOutfit(identifier, slot)
-	local data = GetResourceKvpString(('%s:outfit_%s'):format(identifier, slot))
+function LoadOutfit(citizenid, slot)
+	local data = GetResourceKvpString(('%s:outfit_%s'):format(citizenid, slot))
 	return data and json.decode(data) or {}
 end
 
 exports('loadOutfit', LoadOutfit)
 
-function OutfitNames(identifier)
-	local data = GetResourceKvpString(('%s:outfits'):format(identifier))
+function OutfitNames(citizenid)
+	local data = GetResourceKvpString(('%s:outfits'):format(citizenid))
 	return data and json.decode(data) or {}
 end
 
 exports('outfitNames', OutfitNames)
 
 RegisterNetEvent('ox_appearance:save', function(appearance)
-	local identifier = Players[source]
+	local citizenid = Players[source]
 
-	if identifier then
-		SaveAppearance(identifier, appearance)
+	if citizenid then
+		SaveAppearance(citizenid, appearance)
 	end
 end)
 
 RegisterNetEvent('ox_appearance:saveOutfit', function(appearance, slot, outfitNames)
-	local identifier = Players[source]
+	local citizenid = Players[source]
 
-	if identifier then
-		SaveOutfit(identifier, appearance, slot, outfitNames)
+	if citizenid then
+		SaveOutfit(citizenid, appearance, slot, outfitNames)
 	end
 end)
 
 RegisterNetEvent('ox_appearance:loadOutfitNames', function()
-	local identifier = Players[source]
-	TriggerClientEvent('ox_appearance:outfitNames', source, identifier and OutfitNames(identifier) or {})
+	local citizenid = Players[source]
+	TriggerClientEvent('ox_appearance:outfitNames', source, citizenid and OutfitNames(citizenid) or {})
 end)
 
 RegisterNetEvent('ox_appearance:loadOutfit', function(slot)
-	local identifier = Players[source]
-	TriggerClientEvent('ox_appearance:outfit', source, slot, identifier and LoadOutfit(identifier, slot) or {})
+	local citizenid = Players[source]
+	TriggerClientEvent('ox_appearance:outfit', source, slot, citizenid and LoadOutfit(citizenid, slot) or {})
 end)
 
 AddEventHandler('playerDropped', function()
