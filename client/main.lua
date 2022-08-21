@@ -106,7 +106,7 @@ local config = {
 local function getClosestShop(currentShop, coords)
 	local closestShop = #(currentShop.xyz - coords)
 
-	if closestShop > 25 then
+	if closestShop > 20 then
 		for name, data in pairs(shops) do
 			for i = 1, #data do
 				Wait(100)
@@ -120,15 +120,15 @@ local function getClosestShop(currentShop, coords)
 		end
 	end
 
-	if closestShop > 25 then
+	if closestShop > 20 then
 		Wait(1000)
 	else
 		Wait(0)
-	if closestShop < 7 then
+		if closestShop < 5 then
 			if IsControlJustReleased(0, 38) then
 				exports['fivem-appearance']:startPlayerCustomization(function(appearance)
 					if (appearance) then
-						if ESX then
+						if Framework then
 							TriggerServerEvent('esx_skin:save', appearance)
 						else
 							TriggerServerEvent('ox_appearance:save', appearance)
